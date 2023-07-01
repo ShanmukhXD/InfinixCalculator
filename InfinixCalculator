@@ -1,0 +1,430 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class InfinixCalculator {
+    private JFrame frame;
+    private JTextField textField;
+    private double result;
+    private boolean newExpression;
+
+    public InfinixCalculator() {
+        frame = new JFrame("Graphical Calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 400);
+
+        textField = new JTextField();
+        textField.setPreferredSize(new Dimension(280, 50));
+
+        JPanel buttonPanel = new JPanel(new GridLayout(8, 4));
+        String[] buttonLabels = {"7", "8", "9", "/",
+                "4", "5", "6", "*",
+                "1", "2", "3", "-",
+                "0", ".", "=", "+",
+                "√", "³√", "^", "sin",
+                "cos", "tan", "log", "ln",
+                "asn", "acs", "atn", "PrC",
+                "B-D", "O-D", "H-D",
+                "O-B", "D-B", "H-B",
+                "B-O", "D-O", "H-O",
+                "B-H", "O-H", "D-H"};
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            button.addActionListener(new ButtonListener());
+            buttonPanel.add(button);
+        }
+
+        frame.setLayout(new BorderLayout());
+        frame.add(textField, BorderLayout.NORTH);
+        frame.add(buttonPanel, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+
+    private class ButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String command = e.getActionCommand();
+            if (command.equals("=")) {
+                evaluateExpression();
+            } else if (command.equals("√")) {
+                calculateSquareRoot();
+            } else if (command.equals("³√")) {
+                calculateCubeRoot();
+            } else if (command.equals("^")) {
+                setExponent();
+            } else if (command.equals("sin")) {
+                calculateSine();
+            } else if (command.equals("cos")) {
+                calculateCosine();
+            } else if (command.equals("tan")) {
+                calculateTangent();
+            } else if (command.equals("log")) {
+                calculateLogarithm();
+            } else if (command.equals("ln")) {
+                calculateNaturalLogarithm();
+            } else if (command.equals("asin")) {
+                calculateArcSine();
+            } else if (command.equals("acos")) {
+                calculateArcCosine();
+            } else if (command.equals("atan")) {
+                calculateArcTangent();
+            } else if (command.equals("Prime")) {
+                checkPrime();
+            } else if (command.equals("Bin to Dec")) {
+                convertBinaryToDecimal();
+            } else if (command.equals("Oct to Dec")) {
+                convertOctalToDecimal();
+            } else if (command.equals("Hex to Dec")) {
+                convertHexadecimalToDecimal();
+            } else if (command.equals("Oct to Bin")) {
+                convertOctalToBinary();
+            } else if (command.equals("Dec to Bin")) {
+                convertDecimalToBinary();
+            } else if (command.equals("Hex to Bin")) {
+                convertHexadecimalToBinary();
+            } else if (command.equals("Bin to Oct")) {
+                convertBinaryToOctal();
+            } else if (command.equals("Dec to Oct")) {
+                convertDecimalToOctal();
+            } else if (command.equals("Hex to Oct")) {
+                convertHexadecimalToOctal();
+            } else if (command.equals("Bin to Hex")) {
+                convertBinaryToHexadecimal();
+            } else if (command.equals("Oct to Hex")) {
+                convertOctalToHexadecimal();
+            } else if (command.equals("Dec to Hex")) {
+                convertDecimalToHexadecimal();
+            } else {
+                if (newExpression) {
+                    textField.setText(command);
+                    newExpression = false;
+                } else {
+                    textField.setText(textField.getText() + command);
+                }
+            }
+        }
+
+        private void evaluateExpression() {
+            try {
+                String expression = textField.getText();
+                double value = evaluate(expression);
+                textField.setText(Double.toString(value));
+                newExpression = true;
+            } catch (Exception ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateSquareRoot() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.sqrt(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateCubeRoot() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.cbrt(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void setExponent() {
+            textField.setText(textField.getText() + "^");
+        }
+
+        private void calculateSine() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.sin(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateCosine() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.cos(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateTangent() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.tan(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateLogarithm() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.log10(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateNaturalLogarithm() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.log(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateArcSine() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.asin(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateArcCosine() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.acos(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void calculateArcTangent() {
+            try {
+                double value = Double.parseDouble(textField.getText());
+                double result = Math.atan(value);
+                textField.setText(Double.toString(result));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void checkPrime() {
+            try {
+                int value = Integer.parseInt(textField.getText());
+                boolean isPrime = isPrime(value);
+                textField.setText(value + " is " + (isPrime ? "prime" : "not prime"));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private boolean isPrime(int number) {
+            if (number < 2) {
+                return false;
+            }
+            for (int i = 2; i <= Math.sqrt(number); i++) {
+                if (number % i == 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private double evaluate(String expression) {
+            String[] numbers = expression.split("(?=[-+*/^])|(?<=[-+*/^])");
+            double result = 0;
+            String operator = "+";
+            for (String number : numbers) {
+                if (number.matches("[+-/*^]")) {
+                    operator = number;
+                } else {
+                    double operand = Double.parseDouble(number);
+                    switch (operator) {
+                        case "+":
+                            result += operand;
+                            break;
+                        case "-":
+                            result -= operand;
+                            break;
+                        case "*":
+                            result *= operand;
+                            break;
+                        case "/":
+                            result /= operand;
+                            break;
+                        case "^":
+                            result = Math.pow(result, operand);
+                            break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        // Conversion Functions
+
+        private void convertBinaryToDecimal() {
+            try {
+                String binaryString = textField.getText();
+                int decimal = Integer.parseInt(binaryString, 2);
+                textField.setText(Integer.toString(decimal));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertOctalToDecimal() {
+            try {
+                String octalString = textField.getText();
+                int decimal = Integer.parseInt(octalString, 8);
+                textField.setText(Integer.toString(decimal));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertHexadecimalToDecimal() {
+            try {
+                String hexadecimalString = textField.getText();
+                int decimal = Integer.parseInt(hexadecimalString, 16);
+                textField.setText(Integer.toString(decimal));
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertOctalToBinary() {
+            try {
+                String octalString = textField.getText();
+                int decimal = Integer.parseInt(octalString, 8);
+                String binaryString = Integer.toBinaryString(decimal);
+                textField.setText(binaryString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertDecimalToBinary() {
+            try {
+                int decimal = Integer.parseInt(textField.getText());
+                String binaryString = Integer.toBinaryString(decimal);
+                textField.setText(binaryString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertHexadecimalToBinary() {
+            try {
+                String hexadecimalString = textField.getText();
+                int decimal = Integer.parseInt(hexadecimalString, 16);
+                String binaryString = Integer.toBinaryString(decimal);
+                textField.setText(binaryString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertBinaryToOctal() {
+            try {
+                String binaryString = textField.getText();
+                int decimal = Integer.parseInt(binaryString, 2);
+                String octalString = Integer.toOctalString(decimal);
+                textField.setText(octalString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertDecimalToOctal() {
+            try {
+                int decimal = Integer.parseInt(textField.getText());
+                String octalString = Integer.toOctalString(decimal);
+                textField.setText(octalString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertHexadecimalToOctal() {
+            try {
+                String hexadecimalString = textField.getText();
+                int decimal = Integer.parseInt(hexadecimalString, 16);
+                String octalString = Integer.toOctalString(decimal);
+                textField.setText(octalString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertBinaryToHexadecimal() {
+            try {
+                String binaryString = textField.getText();
+                int decimal = Integer.parseInt(binaryString, 2);
+                String hexadecimalString = Integer.toHexString(decimal);
+                textField.setText(hexadecimalString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertOctalToHexadecimal() {
+            try {
+                String octalString = textField.getText();
+                int decimal = Integer.parseInt(octalString, 8);
+                String hexadecimalString = Integer.toHexString(decimal);
+                textField.setText(hexadecimalString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+
+        private void convertDecimalToHexadecimal() {
+            try {
+                int decimal = Integer.parseInt(textField.getText());
+                String hexadecimalString = Integer.toHexString(decimal);
+                textField.setText(hexadecimalString);
+                newExpression = true;
+            } catch (NumberFormatException ex) {
+                textField.setText("Error");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new InfinixCalculator();
+    }
+}
