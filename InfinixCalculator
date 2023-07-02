@@ -144,7 +144,7 @@ public class InfinixCalculator {
         private void calculateSine() {
             try {
                 double value = Double.parseDouble(textField.getText());
-                double result = Math.sin(value);
+                double result = Math.sin(Math.toRadians(value));
                 textField.setText(Double.toString(result));
                 newExpression = true;
             } catch (NumberFormatException ex) {
@@ -155,7 +155,7 @@ public class InfinixCalculator {
         private void calculateCosine() {
             try {
                 double value = Double.parseDouble(textField.getText());
-                double result = Math.cos(value);
+                double result = Math.cos(Math.toRadians(value));
                 textField.setText(Double.toString(result));
                 newExpression = true;
             } catch (NumberFormatException ex) {
@@ -166,13 +166,15 @@ public class InfinixCalculator {
         private void calculateTangent() {
             try {
                 double value = Double.parseDouble(textField.getText());
-                double result = Math.tan(value);
+                double result = Math.tan(Math.toRadians(value));
                 textField.setText(Double.toString(result));
                 newExpression = true;
             } catch (NumberFormatException ex) {
                 textField.setText("Error");
             }
         }
+
+
 
         private void calculateLogarithm() {
             try {
