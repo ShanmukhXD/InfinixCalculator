@@ -62,37 +62,37 @@ public class InfinixCalculator {
                 calculateLogarithm();
             } else if (command.equals("ln")) {
                 calculateNaturalLogarithm();
-            } else if (command.equals("asin")) {
+            } else if (command.equals("asn")) {
                 calculateArcSine();
-            } else if (command.equals("acos")) {
+            } else if (command.equals("acs")) {
                 calculateArcCosine();
-            } else if (command.equals("atan")) {
+            } else if (command.equals("atn")) {
                 calculateArcTangent();
-            } else if (command.equals("Prime")) {
+            } else if (command.equals("PrC")) {
                 checkPrime();
-            } else if (command.equals("Bin to Dec")) {
+            } else if (command.equals("B-D")) {
                 convertBinaryToDecimal();
-            } else if (command.equals("Oct to Dec")) {
+            } else if (command.equals("O-D")) {
                 convertOctalToDecimal();
-            } else if (command.equals("Hex to Dec")) {
+            } else if (command.equals("H-D")) {
                 convertHexadecimalToDecimal();
-            } else if (command.equals("Oct to Bin")) {
+            } else if (command.equals("O-B")) {
                 convertOctalToBinary();
-            } else if (command.equals("Dec to Bin")) {
+            } else if (command.equals("D-B")) {
                 convertDecimalToBinary();
-            } else if (command.equals("Hex to Bin")) {
+            } else if (command.equals("H-B")) {
                 convertHexadecimalToBinary();
-            } else if (command.equals("Bin to Oct")) {
+            } else if (command.equals("B-O")) {
                 convertBinaryToOctal();
-            } else if (command.equals("Dec to Oct")) {
+            } else if (command.equals("D-O")) {
                 convertDecimalToOctal();
-            } else if (command.equals("Hex to Oct")) {
+            } else if (command.equals("H-O")) {
                 convertHexadecimalToOctal();
-            } else if (command.equals("Bin to Hex")) {
+            } else if (command.equals("B-H")) {
                 convertBinaryToHexadecimal();
-            } else if (command.equals("Oct to Hex")) {
+            } else if (command.equals("O-H")) {
                 convertOctalToHexadecimal();
-            } else if (command.equals("Dec to Hex")) {
+            } else if (command.equals("D-H")) {
                 convertDecimalToHexadecimal();
             } else {
                 if (newExpression) {
@@ -290,7 +290,12 @@ public class InfinixCalculator {
         private void convertBinaryToDecimal() {
             try {
                 String binaryString = textField.getText();
-                int decimal = Integer.parseInt(binaryString, 2);
+                int decimal = 0;
+                int binaryLength = binaryString.length();
+                for (int i = binaryLength - 1; i >= 0; i--) {
+                    int bit = Character.getNumericValue(binaryString.charAt(i));
+                    decimal += bit * Math.pow(2, binaryLength - 1 - i);
+                }
                 textField.setText(Integer.toString(decimal));
                 newExpression = true;
             } catch (NumberFormatException ex) {
@@ -358,7 +363,12 @@ public class InfinixCalculator {
         private void convertBinaryToOctal() {
             try {
                 String binaryString = textField.getText();
-                int decimal = Integer.parseInt(binaryString, 2);
+                int decimal = 0;
+                int binaryLength = binaryString.length();
+                for (int i = binaryLength - 1; i >= 0; i--) {
+                    int bit = Character.getNumericValue(binaryString.charAt(i));
+                    decimal += bit * Math.pow(2, binaryLength - 1 - i);
+                }
                 String octalString = Integer.toOctalString(decimal);
                 textField.setText(octalString);
                 newExpression = true;
