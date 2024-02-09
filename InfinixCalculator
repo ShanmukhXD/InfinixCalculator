@@ -4,12 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class InfinixCalculator {
+
+    private static String createdBy = "Shanmukh Das";
     private JFrame frame;
     private JTextField textField;
     private double result;
     private boolean newExpression;
 
     public InfinixCalculator() {
+
         frame = new JFrame("Infinix Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 400);
@@ -439,4 +442,17 @@ public class InfinixCalculator {
     public static void main(String[] args) {
         new InfinixCalculator();
     }
+
+    private static void displayCreatedByMessage() {
+        System.out.println("Code created by " + createdBy);
+    }
+
+    public static String getCreatedBy() {
+        return createdBy;
+    }
+
+    public static void setCreatedBy(String name) {
+        createdBy = name;
+    }
+
 }
